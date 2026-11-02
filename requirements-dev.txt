@@ -1,0 +1,4 @@
+# Test tools. Install requirements.txt as well: the suite needs torch and matplotlib.
+pytest
+numpy
+pandas

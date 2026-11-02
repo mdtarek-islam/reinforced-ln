@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Training artefacts. Weights live in the workspace models/reinforced-ln/ folder
+# or in models/ here. They are never committed.
+runs/
+models/
+*.pth
+*.pt
+*.ckpt
+*.onnx
+*.h5
+*.keras
+*.joblib
+# Cached SBERT embeddings
+embeddings_cache/
+# Local measurements and charts
+docs/local/
+
+# Evaluation plots
+plots/
+
+# Environments
+.env
+
+# Local secrets and measurements
+.env
+.env.*
+!.env.example
+docs/local/
