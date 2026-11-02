@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 440" width="960" height="440" role="img" aria-labelledby="t d">
+  <title id="t">ReinforcedLN PPO training loop</title>
+  <desc id="d">A simulated user profile sets the reward rule. A slate of 30 candidate novels goes to the actor, which picks 5 with already-picked items masked. Rewards pass through diversity shaping. GAE computes advantages, a clipped update changes the weights and a checkpoint is saved. The loop then starts a new batch of episodes.</desc>
+  <style>
+    text { font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #e6edf3; font-size: 14px; }
+    .sub { fill: #8b949e; font-size: 12px; }
+    .head { font-size: 16px; }
+    .node { fill: #161b22; stroke: #30363d; stroke-width: 1; }
+    .focus { stroke: #58a6ff; }
+    .out { stroke: #3fb950; }
+    .base { fill: none; stroke: #30363d; stroke-width: 2; }
+    .flow { fill: none; stroke: #58a6ff; stroke-width: 2; stroke-dasharray: 6 12; animation: flow 2.4s linear infinite; }
+    .loop { stroke-dasharray: 3 9; }
+    .save { stroke: #3fb950; }
+    .s1 { animation-delay: 0s; } .s2 { animation-delay: .3s; } .s3 { animation-delay: .6s; }
+    .s4 { animation-delay: .9s; } .s5 { animation-delay: 1.2s; } .s6 { animation-delay: 1.5s; }
+    @keyframes flow { to { stroke-dashoffset: -72; } }
+    @media (prefers-reduced-motion: reduce) { .flow { animation: none; stroke-dasharray: none; } }
+  </style>
+  <defs>
+    <marker id="ab" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#58a6ff"/></marker>
+    <marker id="ag" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#3fb950"/></marker>
+  </defs>
+  <rect width="960" height="440" fill="#0d1117"/>
+  <text x="30" y="34" class="head">PPO training loop on simulated feedback</text>
+
+  <g marker-end="url(#ab)">
+    <path class="base" d="M210 100 H268"/><path class="flow s1" d="M210 100 H268"/>
+    <path class="base" d="M450 100 H508"/><path class="flow s2" d="M450 100 H508"/>
+    <path class="base" d="M690 100 H748"/><path class="flow s3" d="M690 100 H748"/>
+    <path class="base" d="M840 130 V228"/><path class="flow s4" d="M840 130 V228"/>
+    <path class="base" d="M750 260 H692"/><path class="flow s5" d="M750 260 H692"/>
+    <path class="base" d="M600 290 V340 H120 V132"/><path class="flow loop s6" d="M600 290 V340 H120 V132"/>
+  </g>
+  <g marker-end="url(#ag)">
+    <path class="base" d="M510 260 H452"/><path class="flow save s6" d="M510 260 H452"/>
+  </g>
+
+  <rect class="node" x="30" y="70" width="180" height="60" rx="6"/>
+  <text x="120" y="96" text-anchor="middle">Simulated user</text><text x="120" y="115" text-anchor="middle" class="sub">hidden profile, 1 or 2 genres</text>
+  <rect class="node" x="270" y="70" width="180" height="60" rx="6"/>
+  <text x="360" y="96" text-anchor="middle">Slate of 30</text><text x="360" y="115" text-anchor="middle" class="sub">candidate novels per step</text>
+  <rect class="node focus" x="510" y="70" width="180" height="60" rx="6"/>
+  <text x="600" y="96" text-anchor="middle">Actor picks 5</text><text x="600" y="115" text-anchor="middle" class="sub">softmax, picked items masked</text>
+  <rect class="node" x="750" y="70" width="180" height="60" rx="6"/>
+  <text x="840" y="96" text-anchor="middle">Rewards</text><text x="840" y="115" text-anchor="middle" class="sub">+1 or -1, diversity shaping</text>
+
+  <rect class="node" x="750" y="230" width="180" height="60" rx="6"/>
+  <text x="840" y="256" text-anchor="middle">GAE advantages</text><text x="840" y="275" text-anchor="middle" class="sub">gamma 0.99, lambda 0.95</text>
+  <rect class="node focus" x="510" y="230" width="180" height="60" rx="6"/>
+  <text x="600" y="256" text-anchor="middle">Clipped update</text><text x="600" y="275" text-anchor="middle" class="sub">epsilon 0.2, value, entropy</text>
+  <rect class="node out" x="270" y="230" width="180" height="60" rx="6"/>
+  <text x="360" y="256" text-anchor="middle">Checkpoint</text><text x="360" y="275" text-anchor="middle" class="sub">ppo_agent.pt</text>
+
+  <text x="140" y="362" class="sub">new batch of episodes with the updated actor and critic</text>
+  <text x="30" y="420" class="sub">Reward rule: +1 when the novel shares a preferred genre and synopsis similarity is at least 0.3, else -1.</text>
+</svg>
