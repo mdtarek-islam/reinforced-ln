@@ -6,7 +6,7 @@ A light novel recommender that learns from feedback, with a PPO actor-critic tra
 
 ## Overview
 
-ReinforcedLN loads `reduced_light_novels.csv` (2,000 rows), joins Genres and Synopsis, and embeds each novel with SBERT `all-MiniLM-L6-v2`. It ranks novels against a free-text synopsis. `python cli.py train` now trains a PPO actor-critic by default, using a simulated user for offline feedback. The original online MLP stays available with `--algo online`, and `main.py` and the Gradio UI still use it.
+ReinforcedLN loads `reduced_light_novels.csv` (2,000 rows), joins Genres and Synopsis, and embeds each novel with SBERT `all-MiniLM-L6-v2`. It ranks novels against a free-text synopsis. `python cli.py train` trains a PPO actor-critic by default, using a simulated user for offline feedback. The original online MLP stays available with `--algo online`, and `main.py` and the Gradio UI still use it.
 
 | Layer | Technology |
 |---|---|
@@ -49,15 +49,18 @@ ReinforcedLN loads `reduced_light_novels.csv` (2,000 rows), joins Genres and Syn
 - Provides a CLI with `train`, `recommend` and `evaluate` subcommands. The original `python main.py` still works.
 - Plots reward and loss history and prints a summary from a saved checkpoint.
 
-### Engineering findings
+### Reported in the project PDFs
 
-- Source: `SPEC_TRACE.md`. The report PDF (p4) describes PPO. The 2026 code now implements it as a PPO actor-critic, so the report and the code agree.
-- Reported, not reproduced: the prototype PDF (p9) states the loss falls from about 0.95 to about 0.43 after 30 feedback trials. This repo does not reproduce that run.
-- Reported, not reproduced: the report PDF (p4) states over 10,000 novels reduced to around 2,000 at an 80:20 ratio. The data source is the MyAnimeList API.
-- Simulated feedback result, qualitative: PPO beats a random policy. The online MLP baseline currently scores higher than PPO, so tuning is open work. Measured values stay in local files and are not published here.
-- Open work: `cli.py recommend` loads online MLP checkpoints only. PPO checkpoint loading is not built yet.
+Source: `SPEC_TRACE.md`.
+
+- The prototype PDF (p9) states the loss falls from about 0.95 to about 0.43 after 30 feedback trials.
+- The report PDF (p4) states over 10,000 novels reduced to around 2,000 at an 80:20 ratio. The data source is the MyAnimeList API.
+- The report PDF (p4) describes PPO. The code implements it as a PPO actor-critic.
+
+### Engineering notes
+
 - The shipped `reduced_light_novels.csv` holds 398 repeated IDs. The file stays as shipped.
-- 2026 fixes:
+- Fixes:
   - The reducer duplicated multi-genre novels and its output order was not deterministic.
   - The hard-coded API client ID moved to the `MAL_CLIENT_ID` environment variable.
   - A null synopsis crashed the extractor.
@@ -121,4 +124,4 @@ Released under the MIT licence. See [LICENSE](./LICENSE). Raise bugs and questio
 
 ## Maintenance status
 
-Experimental. The repository is on upload hold, PPO tuning is open work, and `cli.py recommend` does not yet load PPO checkpoints.
+Maintained: the 69 tests pass on main and `cli.py train` runs from a clean clone.

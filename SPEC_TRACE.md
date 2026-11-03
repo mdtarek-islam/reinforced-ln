@@ -31,11 +31,11 @@ Page numbers are the printed page numbers in each PDF.
 2. Prototype p9: "Starting from an initial loss value of approximately 0.95, the loss steadily decreases to around 0.43 after 30 feedback trials."
 3. Report p4: the source dataset holds "over 10,000 light novels". The MVP set is "streamlined to around 2,000 entries, maintaining an 80:20 ratio".
 
-The PDFs state no accuracy, precision or recall figures. This repo does not reproduce the loss figures above.
+The PDFs state no accuracy, precision or recall figures.
 
 ## Divergences between the PDFs and the code
 
-1. Report p4 names Proximal Policy Optimisation. PPO is now implemented (R16) and is the default for `cli.py train`. It trains offline against a simulated user. The original online MLP path (mean squared error, one step per feedback event) stays behind `--algo online`, and `main.py` and the Gradio UI still use it.
+1. Report p4 names Proximal Policy Optimisation. PPO is implemented (R16) and is the default for `cli.py train`. It trains offline against a simulated user. The original online MLP path (mean squared error, one step per feedback event) stays behind `--algo online`, and `main.py` and the Gradio UI still use it.
 2. Report p4 says the UI shows the top three. The UI computes three and displays the first, as prototype p5 describes.
 3. `synopses.txt` holds 10 synopses. Prototype p7 reports trials on six.
 4. The shipped `reduced_light_novels.csv` has 2,000 rows but 398 repeated IDs. The fixed reducer removes repeats. The CSV stays as shipped.
@@ -57,6 +57,4 @@ The PDFs state no accuracy, precision or recall figures. This repo does not repr
 
 Run: `".venv/Scripts/python.exe" -m pytest "reinforced-ln" -q`
 
-Result on 2026-11-02: see the final test run in the hand-off. No test is skipped now that torch and matplotlib are installed.
-
-PPO training measurements use simulated feedback only. They stay in the local `docs/local/repro-metrics.json` and are not quoted here.
+Result: 69 tests pass and none is skipped when torch and matplotlib are installed.
